@@ -21,6 +21,7 @@
 \usepackage{listings}
 \usepackage{color}
 \usepackage{url}
+\usepackage[toc]{glossaries}
 \usepackage[dvipsnames]{xcolor}
 \usepackage[longnamesfirst,nonamebreak]{natbib}
 \usepackage[headsep=1cm,headheight=3cm,hmargin=2cm,vmargin=2.5cm]{geometry}
@@ -44,38 +45,6 @@
 \definecolor{javapurple}{rgb}{0.5,0,0.35}
 % javadoc
 \definecolor{javadocblue}{rgb}{0.25,0.35,0.75}
-
-
-% Useful Commands
-% Comments and notes
-\newcommand{\comment}[1]{}
-\newcommand{\ifreport}[1]{#1}
-\newcommand{\todo}{{\bf \colorbox{red}{\color{white}TODO:}}}
-\newcommand{\ie}{{\em i.e.,~}}
-\newcommand{\eg}{{\em e.g.,~}}
-\newcommand{\term}[1]{\mbox{\texttt{#1}}}
-\newcommand{\itl}[1]{\mbox{\textit{#1}}}
-
-% Commas and semicolons
-\newcommand{\comma}{,\,}
-\newcommand{\commadots}{\comma \ldots \comma}
-\newcommand{\semi}{;\mbox{;};}
-\newcommand{\semidots}{\semi \ldots \semi}
-
-% Brackets
-\newcommand{\set}[1]{\{#1\}}
-\newcommand{\sbs}[1]{\lquote #1 \rquote}
-
-% Spacing
-\newcommand{\gap}{\quad\quad}
-\newcommand{\biggap}{\quad\quad\quad}
-\newcommand{\nextline}{\\ \\}
-\newcommand{\htabwidth}{0.5cm}
-\newcommand{\tabwidth}{1cm}
-\newcommand{\htab}{\hspace{\htabwidth}}
-\newcommand{\tab}{\hspace{\tabwidth}}
-\newcommand{\linesep}{\ \hrulefill \ \smallskip}
-
 
 \lstset{
 	basicstyle=\ttfamily\small,
@@ -135,3 +104,34 @@
 	urlcolor=black,
 	linktoc=all
 ]{hyperref}
+
+
+% Useful Commands
+% Comments and notes
+\newcommand{\comment}[1]{}
+\newcommand{\ifreport}[1]{#1}
+\newcommand{\todo}{{\bf \colorbox{red}{\color{white}TODO:}}}
+\newcommand{\ie}{{\em i.e.,~}}
+\newcommand{\eg}{{\em e.g.,~}}
+\newcommand{\term}[1]{\mbox{\texttt{#1}}}
+\newcommand{\itl}[1]{\mbox{\textit{#1}}}
+
+% Commas and semicolons
+\newcommand{\comma}{,\,}
+\newcommand{\commadots}{\comma \ldots \comma}
+\newcommand{\semi}{;\mbox{;};}
+\newcommand{\semidots}{\semi \ldots \semi}
+
+% Brackets
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\sbs}[1]{\lquote #1 \rquote}
+
+% Spacing
+\newcommand{\gap}{\quad\quad}
+\newcommand{\biggap}{\quad\quad\quad}
+\newcommand{\nextline}{\\ \\}
+\newcommand{\htabwidth}{0.5cm}
+\newcommand{\tabwidth}{1cm}
+\newcommand{\htab}{\hspace{\htabwidth}}
+\newcommand{\tab}{\hspace{\tabwidth}}
+\newcommand{\linesep}{\ \hrulefill \ \smallskip}
