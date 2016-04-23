@@ -1,0 +1,64 @@
+================================================
+Pf01: Numerische Loesungsverfahren;
+ - Regula Falsi
+ - Fortgesetzte Intervallhalbierung
+ - Newtonsches Naeherungsverfahren
+================================================
+Pf02: Differentialrechnung;
+ - Differenzquozient und Differentialquozient
+ - Kurvendiskussion
+ - Umgekehrte Kurvendiskussion
+ - Extremwertaufgabe
+================================================
+Pf03: Integration;
+ - Bestimmtes und unbestimmtes Integral
+ - Numerische Integrationsverfahren
+ - Grundintegrale und die Integration in Maxima
+ - Integrationsverfahren
+================================================
+Pf05:
+ - Extremwerte von Funktionen in mehreren Variablen
+ - Anwendung in der Fehlerrechnung
+ - Linare Regression
+ - Quadratische Regression
+ - Kubische Regression
+ - Regressionvergleich
+================================================
+Pf06:
+ - Richtungsfeld
+ - DGL 1. Ordnung (analytische + numerische Loesung)
+ - DGL 2. Ordnung (analytische + numerische Loesung)
+ - Schwingungen
+ - Gekoppelte DGL
+================================================
+Pf11: Wirtschaftsmathematik;
+ - Lineare Optimierung
+ - Kosten und Preistheorie
+================================================
+Pf12:
+ - Arithmetische- und Geometrischereihe, Konvergenzkriterien
+ - Potenzreihen und -entwicklung
+ - Talyor-Reihe
+ - Wirtschaftsmathematische Anwendungen
+================================================
+Pf13: Matrizen;
+ - Matrizen, Grundlagen + Rechenregeln
+ - Drehung in R2, alles mit Bloecken
+ - Drehung in R3, alles mit Bloecken
+================================================
+Pf081: Statistik;
+ - Absoulte & relative Hauefigkeit
+ - Kumulative absolute & relative Hauefigkeit
+ - Fehlerdarstellung, Piechart + Pareto
+ - Kennwerte
+================================================
+Pf082: Stockastik;
+ - Stockastik
+ - Abzaehltechniken
+ - Hypergeometrische Verteilung
+ - Binomialverteilung
+ - Passionverteilung
+ - Normalverteilung
+ - Zusammenhanganalyse
+ - Korrelationen
+================================================
