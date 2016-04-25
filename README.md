@@ -1,7 +1,5 @@
 # Matura 2015/16
 
-Vorbereitung von Daniel Melichar
-
 __Schriftlich__
 
 * Angewante Mathematik (AM) am 10.05.
