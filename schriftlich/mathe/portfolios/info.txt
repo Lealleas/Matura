@@ -16,49 +16,43 @@ Pf03: Integration;
  - Grundintegrale und die Integration in Maxima
  - Integrationsverfahren
 ================================================
-Pf05:
- - Extremwerte von Funktionen in mehreren Variablen
+Pf05: Funktionen in mehreren Variablen
+ - Grundlagen
  - Anwendung in der Fehlerrechnung
- - Linare Regression
- - Quadratische Regression
- - Kubische Regression
- - Regressionvergleich
+ - Lineare Regression
 ================================================
-Pf06:
- - Richtungsfeld
+Pf06: Differenzialgleichungen
+ - Definition und Grundlagen
  - DGL 1. Ordnung (analytische + numerische Loesung)
- - DGL 2. Ordnung (analytische + numerische Loesung)
+ - DGL 2. Ordnung (analytische lösung)
  - Schwingungen
- - Gekoppelte DGL
 ================================================
-Pf11: Wirtschaftsmathematik;
- - Lineare Optimierung
- - Kosten und Preistheorie
-================================================
-Pf12:
- - Arithmetische- und Geometrischereihe, Konvergenzkriterien
- - Potenzreihen und -entwicklung
- - Talyor-Reihe
+Pf12: Unendliche Reihen
+ - Grundlagen und Definition
  - Wirtschaftsmathematische Anwendungen
+ - Unendliche Reihen
 ================================================
-Pf13: Matrizen;
- - Matrizen, Grundlagen + Rechenregeln
- - Drehung in R2, alles mit Bloecken
- - Drehung in R3, alles mit Bloecken
+Pf13: Matrizen
+ - Glossar & Theorie
+ - Lösungen von Gleichungssystemen
+ - Drehung
+ - Spiegelung
+ - Deformation
 ================================================
-Pf081: Statistik;
+Pf14: Verschlüsselung
+ - Modulare Arithmethik
+ - Square and Multiply Verfahren
+ - Verschlüsselung
+================================================
+Pf081: Statistik
  - Absoulte & relative Hauefigkeit
  - Kumulative absolute & relative Hauefigkeit
  - Fehlerdarstellung, Piechart + Pareto
  - Kennwerte
 ================================================
-Pf082: Stockastik;
- - Stockastik
- - Abzaehltechniken
- - Hypergeometrische Verteilung
- - Binomialverteilung
- - Passionverteilung
- - Normalverteilung
- - Zusammenhanganalyse
- - Korrelationen
+Pf082: Stockastik
+ - Stochastik
+ - Abzähltechnicken
+ - Verteilungen
+ - Beurteilende Statistik
 ================================================
