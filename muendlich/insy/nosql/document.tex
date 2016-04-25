@@ -1,0 +1,89 @@
+\documentclass[letterpaper, 12pt]{article}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DEFINITIONS
+\gdef\mytitle{}
+\gdef\mythema{NoSQL}
+
+\gdef\mysubject{INSY}
+\gdef\mycourse{5AHITM 2015/16}
+\gdef\myauthor{Daniel Melichar}
+
+\gdef\myversion{1.0}
+\gdef\mybegin{\today}
+\gdef\myfinish{\today}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% SETTINGS
+\input{special/preamble.tex}
+\setcounter{secnumdepth}{5}
+
+\lhead{\mysubject}
+\chead{}
+\rhead{\bfseries\mythema}
+\lfoot{\mycourse}
+\cfoot{\thepage}
+% Creative Commons license BY
+% http://creativecommons.org/licenses/?lang=de
+\rfoot{\ccby\hspace{2mm}\myauthor}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DOCUMENT BEGIN
+\begin{document}
+\parindent 0pt
+\parskip 6pt
+
+% TITLE PAGE
+\input{special/title}
+
+% TOC, TABLES, FIGURES, ABSTRACT
+\pagenumbering{Roman} 
+\clearpage
+\tableofcontents
+\clearpage
+ 
+% CONTNET
+\clearpage
+\pagenumbering{arabic}
+\pagestyle{fancy}
+\input{sections/ch1_intro.tex}
+
+% Reset Autor
+\lfoot{}
+
+% BIBL
+\clearpage
+\begingroup
+\bibliographystyle{abbrv}
+\bibliography{references}
+\endgroup
+
+% APPENDENCIES
+\clearpage
+\pagenumbering{Roman}
+\section{Appendix}
+
+\subsection{Figuren}
+	\begingroup
+		\makeatletter
+		\@starttoc{lof}% Print List of Figures
+		\makeatother
+	\endgroup
+
+\subsection{Tabellen}
+	\begingroup
+		\makeatletter
+		\@starttoc{lot}% Print List of Tables
+		\makeatother
+	\endgroup
+
+\subsection{Listings}
+	\begingroup
+		\makeatletter
+		\@starttoc{lol}% Print List of Listings lol
+		\makeatother
+	\endgroup
+\end{document}
+
