@@ -6,7 +6,7 @@ __Schriftlich__
 
 * Angewante Mathematik (AM) am 10.05.
 * Deutsch am 09.05.
-* Softwareentwicklung (SEW) am 13.05. __(???)__
+* Softwareentwicklung (SEW) am 13.05.
 
 __Mündlich__
 
