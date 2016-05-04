@@ -2,16 +2,14 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % DEFINITIONS
-\gdef\mytitle{}
+\gdef\mytitle{M\"undliche Matura}
 \gdef\mythema{Datamining \& Datawarehousing}
 
 \gdef\mysubject{INSY}
 \gdef\mycourse{5AHITM 2015/16}
 \gdef\myauthor{Daniel Melichar}
-
-\gdef\myversion{1.0}
-\gdef\mybegin{\today}
-\gdef\myfinish{\today}
+\gdef\myversion{0.1}
+\gdef\myteacher{Betreuer: Michael Borko}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SETTINGS
@@ -49,11 +47,20 @@
 \pagenumbering{arabic}
 \pagestyle{fancy}
 \input{sections/ch1_intro.tex}
+\input{sections/ch2_dbapps.tex}
+\input{sections/ch3_webapps.tex}
+\input{sections/ch4_cms.tex}
+\input{sections/ch5_informationssysteme.tex}
+\input{sections/ch6_mobile.tex}
+\input{sections/ch7_zwischenbetrieblich.tex}
 
 % Reset Autor
 \lfoot{}
 
 % BIBL
+
+% For debugging
+\nocite{*}
 \clearpage
 \begingroup
 \bibliographystyle{abbrv}
