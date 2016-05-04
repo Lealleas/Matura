@@ -17,5 +17,5 @@ __Mündlich__
 	- Wirtschaft und Recht im internationalen Kontext: Amerikanische Kreditgrenze
 * Informationssysteme (INSY) am 15.06. um 13:00
 	- NoSQL bei LISE0
-	- Datamining & Datawarehousing bei BORM __(???)__
+	- Datamining & Datawarehousing bei BORM
 * Englisch am 15.06. um 16:30
