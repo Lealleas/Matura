@@ -64,7 +64,7 @@ class Ui_MainWindow(object):
         self.gridLayout = QtGui.QGridLayout(self.centralWidget)
         self.gridLayout.setObjectName("gridLayout")
         self.tableView = QtGui.QTableView(self.centralWidget)
-        .... 
+        ...
 ```
 
 Die View beinhaltet ein Menu mit einigen Unterpunkten welche alle so gennante _actions_ haben. In den meisten Fällen sollte man Keyboard Shorcuts auf diese Actions setzten (auch hier bietet Qt eine Hilfe, bitte nicht _"Ctrl + N"_ als  Parameter übergeben
@@ -170,6 +170,144 @@ print "Here's your file %r:" % filename
 print txt.read()
 ```
 
----
-__To-Do:__ Signals and Slots + Commands
+## Signals und Slots
+
+Im allgemeinen werden Signals und Slots für die Kommunikation zwischen Objekten verwendet. Ein Beispiel hierfür ist ein ganz normaler Button. Beim Klicken des Buttons wird ein Signal gesendet, welches dann ein spezifisches Slot (also in den meisten Fällen eine Python Methode) ausführt. Die Signals des Buttons sind zahlreich: _clicked_, _released_, _hover_ oder eigensgeschriebene. 
+
+Ein simples Beispiel.
+
+```python
+from PySide.QtCore import QObject, Signal, Slot
+ 
+class PunchingBag(QObject):
+    ''' Represents a punching bag; when you punch it, it
+        emits a signal that indicates that it was punched. '''
+    punched = Signal()
+ 
+    def __init__(self):
+        # Initialize the PunchingBag as a QObject
+        QObject.__init__(self)
+ 
+    def punch(self):
+        ''' Punch the bag '''
+        self.punched.emit()
+```
+
+Hier verbinden wir jetzt unser Signal zu dem entsprechendem Slot, welcher dann was macht
+
+```python
+@Slot()
+def say_punched():
+    ''' Give evidence that a bag was punched. '''
+    print('Bag was punched.')
+ 
+bag = PunchingBag()
+# Connect the bag's punched signal to the say_punched slot
+bag.punched.connect(say_punched)
+```
+
+Hier führen wir dann alles aus und bekommen folgenden output.
+
+```python
+# Punch the bag 10 times
+for i in range(10):
+    bag.punch()
+```
+
+```python
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+Bag was punched.
+```
+
+## Commands und Undo/Redo
+
+Okay, der Blödsinn ist wirklich nicht so schwer. Im allgemeinen ist ein Undo und Redo eigentlich eine Veränderung von Daten auf eine Version die vorab gespeichert wurde. Das heißt konkret, dass wir eine Liste haben in welcher alle Versionen unserer Daten sind. Wir als Qt Entwickler können festlegen wann wir eine neue Version haben wollen und wann wir revertieren (bzw. wieder vorspult). 
+
+Der __QUndoStack__ ist eigentlich eine Liste in welcher alle Versionen gespeichert werden. Mittels dem __QUndoCommand__ können wir genau sagen was passieren sollen wenn wir ein Undo oder ein Redo machen wollen.
+
+Das folgende Beispiel ist recht simple gestalltet, es sollte aber erklären wie man grundsätzlich vorgeht.
+
+```python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from PySide.QtGui import QUndoCommand, QUndoStack
+
+class MyDocument(object):
+
+    def __init__(self):
+        self.document = []
+
+    def __repr__(self):
+        return repr(self.document)
+
+    def chop(self):
+        self.document = self.document[:-1]
+
+    def append(self, item):
+        self.document.append(item)
+
+
+class MyCommand(QUndoCommand):
+
+    def __init__(self, doc, *args, **kwargs):
+        super(type(self), self).__init__(*args, **kwargs)
+        self.document = doc
+
+    def undo(self):
+        self.document.chop()
+        print("undo: {0}, undo-text: {1}".format(self.document, self.text()))
+
+    def redo(self):
+        self.document.append(self.text())
+        print("redo: {0}, redo-text: {1}".format(self.document, self.text()))
+
+
+if __name__ == '__main__':
+    stack1 = QUndoStack()
+    document1 = MyDocument()
+
+    c = MyCommand(document1)
+    c.setText("comamnd1")
+    stack1.push(c)
+    print(stack1.count())
+
+    c = MyCommand(document1)
+    c.setText("comamnd2")
+    stack1.push(c)
+    print(stack1.count())
+
+    stack1.undo()
+    stack1.undo()
+    stack1.redo()
+    print(stack1.count())
+
+    c = MyCommand(document1)
+    c.setText("comamnd3")
+    stack1.push(c) # command2 gets deleted
+    print(stack1.count())
+```
+Folgendes wird dann ausgegeben
+
+```python
+redo: [u'comamnd1'], redo-text: comamnd1
+1
+redo: [u'comamnd1', u'comamnd2'], redo-text: comamnd2
+2
+undo: [u'comamnd1'], undo-text: comamnd2
+undo: [], undo-text: comamnd1
+redo: [u'comamnd1'], redo-text: comamnd1
+2
+redo: [u'comamnd1', u'comamnd3'], redo-text: comamnd3
+2
+```
+
 
