@@ -1,11 +1,11 @@
 package main.client;
 
+import main.server.ChatMessage;
+
 import javax.swing.*;
 import java.awt.*;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * ChatClientGUI
@@ -16,119 +16,186 @@ import java.net.UnknownHostException;
  * Version: 1.0
  */
 
+public class ChatClientGUI extends JFrame implements ActionListener {
 
+    private static final long serialVersionUID = 1L;
+    // will first hold "Username:", later on "Enter message"
+    private JLabel label;
+    // to hold the Username and later on the messages
+    private JTextField tf;
+    // to hold the server address an the port number
+    private JTextField tfServer, tfPort;
+    // to Logout and get the list of the users
+    private JButton login, logout, whoIsIn;
+    // for the chat room
+    private JTextArea ta;
+    // if it is for connection
+    private boolean connected;
+    // the Client object
+    private ChatClient client;
+    // the default port number
+    private int defaultPort;
+    private String defaultHost;
 
-public class ChatClientGUI extends JApplet implements Clients {
+    // Constructor connection receiving a socket number
+    ChatClientGUI(String host, int port) {
 
-    private Socket socket = null;
-    private DataOutputStream streamOut = null;
-    private ChatClientThread client = null;
-    private JTextArea display = new JTextArea();
-    private JTextField input = new JTextField();
-    private String serverName = "localhost";
-    private int serverPort = 5555;
+        super("Chat Client");
+        defaultPort = port;
+        defaultHost = host;
 
-    private Button send = new Button("Send"),
-            connect = new Button("Connect"),
-            quit = new Button("Bye");
+        // The NorthPanel with:
+        JPanel northPanel = new JPanel(new GridLayout(3,1));
+        // the server name anmd the port number
+        JPanel serverAndPort = new JPanel(new GridLayout(1,5, 1, 3));
+        // the two JTextField with default value for server address and port number
+        tfServer = new JTextField(host);
+        tfPort = new JTextField("" + port);
+        tfPort.setHorizontalAlignment(SwingConstants.RIGHT);
 
-    public void init() {
-        JPanel keys = new JPanel();
-        keys.setLayout(new GridLayout(1, 2));
-        keys.add(quit);
-        keys.add(connect);
+        serverAndPort.add(new JLabel("Server Address:  "));
+        serverAndPort.add(tfServer);
+        serverAndPort.add(new JLabel("Port Number:  "));
+        serverAndPort.add(tfPort);
+        serverAndPort.add(new JLabel(""));
+        // adds the Server an port field to the GUI
+        northPanel.add(serverAndPort);
 
-        JPanel messages = new JPanel();
-        messages.setLayout(new BorderLayout());
-        messages.add("East", send);
-        messages.add("Center", input);
+        // the Label and the TextField
+        label = new JLabel("Enter your username below", SwingConstants.CENTER);
+        northPanel.add(label);
+        tf = new JTextField("Anonymous");
+        tf.setBackground(Color.WHITE);
+        northPanel.add(tf);
+        add(northPanel, BorderLayout.NORTH);
 
-        setLayout(new BorderLayout());
-        add("Center", display);
-        add("North", keys);
-        add("South", messages);
+        // The CenterPanel which is the chat room
+        ta = new JTextArea("Welcome to the Chat room\n", 80, 80);
+        JPanel centerPanel = new JPanel(new GridLayout(1,1));
+        centerPanel.add(new JScrollPane(ta));
+        ta.setEditable(false);
+        add(centerPanel, BorderLayout.CENTER);
 
-        quit.disable();
-        send.disable();
-        getParameters();
+        // the 3 buttons
+        login = new JButton("Login");
+        login.addActionListener(this);
+        logout = new JButton("Logout");
+        logout.addActionListener(this);
+        logout.setEnabled(false);		// you have to login before being able to logout
+        whoIsIn = new JButton("Who is in");
+        whoIsIn.addActionListener(this);
+        whoIsIn.setEnabled(false);		// you have to login before being able to Who is in
+
+        JPanel southPanel = new JPanel();
+        southPanel.add(login);
+        southPanel.add(logout);
+        southPanel.add(whoIsIn);
+        add(southPanel, BorderLayout.SOUTH);
+
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(600, 600);
+        setVisible(true);
+        tf.requestFocus();
+
     }
 
-    public boolean action(Event e, Object o) {
-        if (e.target == quit) {
-            input.setText(".bye");
-            send();
-            quit.disable();
-            send.disable();
-            connect.enable();
-        } else if (e.target == connect) {
-            connect(serverName, serverPort);
-        } else if (e.target == send) {
-            send();
-            input.requestFocus();
+    // called by the Client to append text in the TextArea
+    void append(String str) {
+        ta.append(str);
+        ta.setCaretPosition(ta.getText().length() - 1);
+    }
+    // called by the GUI is the connection failed
+    // we reset our buttons, label, textfield
+    void connectionFailed() {
+        login.setEnabled(true);
+        logout.setEnabled(false);
+        whoIsIn.setEnabled(false);
+        label.setText("Enter your username below");
+        tf.setText("Anonymous");
+        // reset port number and host name as a construction time
+        tfPort.setText("" + defaultPort);
+        tfServer.setText(defaultHost);
+        // let the user change them
+        tfServer.setEditable(false);
+        tfPort.setEditable(false);
+        // don't react to a <CR> after the username
+        tf.removeActionListener(this);
+        connected = false;
+    }
+
+    /*
+    * Button or JTextField clicked
+    */
+    public void actionPerformed(ActionEvent e) {
+        Object o = e.getSource();
+        // if it is the Logout button
+        if(o == logout) {
+            client.sendMessage(new ChatMessage(ChatMessage.LOGOUT, ""));
+            return;
         }
-        return true;
-    }
-
-    public void connect(String serverName, int serverPort) {
-        println("Establishing connection. Please wait ...");
-        try {
-            socket = new Socket(serverName, serverPort);
-            println("Connected: " + socket);
-            open();
-            send.enable();
-            connect.disable();
-            quit.enable();
-        } catch (UnknownHostException uhe) {
-            println("Host unknown: " + uhe.getMessage());
-        } catch (IOException ioe) {
-            println("Unexpected exception: " + ioe.getMessage());
+        // if it the who is in button
+        if(o == whoIsIn) {
+            client.sendMessage(new ChatMessage(ChatMessage.WHOISIN, ""));
+            return;
         }
-    }
 
-    private void send() {
-        try {
-            streamOut.writeUTF(input.getText());
-            streamOut.flush();
-            input.setText("");
-        } catch (IOException ioe) {
-            println("Sending error: " + ioe.getMessage());
-            stop();
+        // ok it is coming from the JTextField
+        if(connected) {
+            // just have to send the message
+            client.sendMessage(new ChatMessage(ChatMessage.MESSAGE, tf.getText()));
+            tf.setText("");
+            return;
         }
-    }
 
-    public void handle(String msg) {
-        if (msg.equals(".bye")) {
-            println("Goodbye!");
-            stop();
-        } else println(msg);
-    }
 
-    public void open() {
-        try {
-            streamOut = new DataOutputStream(socket.getOutputStream());
-            client = new ChatClientThread(this, socket);
-        } catch (IOException ioe) {
-            println("Error opening output stream: " + ioe);
+        if(o == login) {
+            // ok it is a connection request
+            String username = tf.getText().trim();
+            // empty username ignore it
+            if(username.length() == 0)
+                return;
+            // empty serverAddress ignore it
+            String server = tfServer.getText().trim();
+            if(server.length() == 0)
+                return;
+            // empty or invalid port numer, ignore it
+            String portNumber = tfPort.getText().trim();
+            if(portNumber.length() == 0)
+                return;
+            int port = 0;
+            try {
+                port = Integer.parseInt(portNumber);
+            }
+            catch(Exception en) {
+                return;   // nothing I can do if port number is not valid
+            }
+
+            // try creating a new Client with GUI
+            client = new ChatClient(server, port, username, this);
+            // test if we can start the Client
+            if(!client.start())
+                return;
+            tf.setText("");
+            label.setText("Enter your message below");
+            connected = true;
+
+            // disable login button
+            login.setEnabled(false);
+            // enable the 2 buttons
+            logout.setEnabled(true);
+            whoIsIn.setEnabled(true);
+            // disable the Server and Port JTextField
+            tfServer.setEditable(false);
+            tfPort.setEditable(false);
+            // Action listener for when the user enter a message
+            tf.addActionListener(this);
         }
+
     }
 
-    public void stop() {
-        try {
-            if (streamOut != null) streamOut.close();
-            if (socket != null) socket.close();
-        } catch (IOException ioe) {
-            println("Error closing ...");
-        }
-        client.close();
-        client.stop();
+    // to start the whole thing the server
+    public static void main(String[] args) {
+        new ChatClientGUI("localhost", 1500);
     }
 
-    private void println(String msg) {
-        display.append(msg + "\n");
-    }
-
-    public void getParameters() {
-        //this.serverName = this.getParameter("host");
-        //this.serverPort = Integer.parseInt(this.getParameter("port"));
-    }
 }
